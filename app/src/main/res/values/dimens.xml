@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="character_details_image_height">200dp</dimen>
+    <dimen name="name_font_size">20sp</dimen>
+    <dimen name="common_padding">10dp</dimen>
+</resources>
