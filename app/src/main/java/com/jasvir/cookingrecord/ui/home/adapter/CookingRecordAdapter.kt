@@ -7,13 +7,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jasvir.cookingrecord.R
+import com.jasvir.cookingrecord.common.DISPLAY_DATE_FORMAT
+import com.jasvir.cookingrecord.common.SERVER_DATE_FORMAT
 import com.jasvir.cookingrecord.extensions.load
 import com.jasvir.cookingrecord.model.Character
 import com.jasvir.cookingrecord.navigation.Navigator
 import kotlinx.android.synthetic.main.item_record.view.*
+import java.text.SimpleDateFormat
 
-class CookingRecordAdapter(private val navigator: Navigator) :
+class CookingRecordAdapter() :
     PagedListAdapter<Character, CookingRecordAdapter.ViewHolder>(characterDiff) {
+
+    val serverFormat = SimpleDateFormat(SERVER_DATE_FORMAT)
+    val localFormat = SimpleDateFormat(DISPLAY_DATE_FORMAT)
+
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(p0.context).inflate(R.layout.item_record, p0, false)
@@ -25,20 +32,16 @@ class CookingRecordAdapter(private val navigator: Navigator) :
         holder.txtName.text = character?.recipe_type
         holder.imgThumbnail.load("${character?.image_url}")
         holder.txtComment.text = character?.comment
+        holder.txtDate.text = localFormat.format(serverFormat.parse(character?.recorded_at))
+
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
-        override fun onClick(p0: View?) {
-            navigator.navigateToDetails(getItem(adapterPosition)!!)
-        }
-
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgThumbnail = itemView.imgThumbnail
         val txtName = itemView.txtName
         val txtComment = itemView.txtComment
-        init {
-            itemView.setOnClickListener(this)
-        }
+        val txtDate = itemView.txtDate
+
 
     }
 

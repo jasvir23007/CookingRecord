@@ -13,10 +13,8 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class CookingViewModel : ViewModel(), Navigator {
+class CookingViewModel : ViewModel() {
 
-    override fun navigateToDetails(character: Character) {
-    }
 
 
     lateinit var characterList: Observable<PagedList<Character>>
@@ -26,7 +24,7 @@ class CookingViewModel : ViewModel(), Navigator {
     val showProgress = MutableLiveData<Boolean>()
     val marvelApi = CookingRecordApi.getService()
     val adapter: CookingRecordAdapter by lazy {
-        CookingRecordAdapter(this)
+        CookingRecordAdapter()
     }
 
     init {
